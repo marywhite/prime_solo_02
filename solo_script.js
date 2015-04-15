@@ -23,6 +23,7 @@ for(var i = 0; i < array.length; i++){
 	position.appendChild(newEl);
 }
 
+//change calculateSTI to access multidimensional array items with [i]
 function calculateSTI(array){
   var newArray = [];
 
@@ -38,9 +39,17 @@ function calculateSTI(array){
     bonus = 0.13;
   }
 
-  newArray[1] = bonus * 100;
-  newArray[2] = baseSalary * (1.0 + bonus);
-  newArray[3] = Math.round(baseSalary * bonus);
+  //edit total salary variable to round to cents
+  var totalSalary = baseSalary * (1.0 + bonus);
+  totalSalary *= 100;
+  totalSalary = Math.round(totalSalary);
+  totalSalary /= 100;
+
+  //multiply bonus by 100 to display percent 
+  newArray[1] = ' ' + bonus * 100;
+  newArray[2] = ' ' + totalSalary;
+  //round bonus amount to nearest dollar
+  newArray[3] = ' ' + Math.round(baseSalary * bonus);
   console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
   return newArray;
 }
@@ -64,6 +73,7 @@ function getBaseSTI(reviewScore){
       basePercent = 0.10;
       break;
   }
+  // remove -1 from basePercent
   return basePercent;
 }
 
