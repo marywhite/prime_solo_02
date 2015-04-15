@@ -16,7 +16,7 @@ position = document.getElementById('content');
 //Loop the array, extracting each array and writing information to the DOM
 //Note that the information is not 'clean'
 for(var i = 0; i < array.length; i++){
-	array[i] = calculateSTI(array);
+  array[i] = calculateSTI(array, i);
  	newEl = document.createElement('li');
 	newText = document.createTextNode(array[i]);
 	newEl.appendChild(newText);
@@ -26,20 +26,21 @@ for(var i = 0; i < array.length; i++){
 function calculateSTI(array){
   var newArray = [];
 
-  newArray[0] = array[0];
+  newArray[0] = array[i][0];
 
-  var employeeNumber = array[1];
-  var baseSalary = array[2];
-  var reviewScore = array[3];
+  var employeeNumber = array[i][1];
+  var baseSalary = array[i][2];
+  var reviewScore = array[i][3];
+
 
   var bonus = getBaseSTI(reviewScore) + getYearAdjustment(employeeNumber) - getIncomeAdjustment(baseSalary);
   if(bonus > 0.13){
     bonus = 0.13;
   }
 
-  newArray[1] = bonus;
+  newArray[1] = bonus * 100;
   newArray[2] = baseSalary * (1.0 + bonus);
-  newArray[3] = baseSalary * bonus;
+  newArray[3] = Math.round(baseSalary * bonus);
   console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
   return newArray;
 }
@@ -63,7 +64,7 @@ function getBaseSTI(reviewScore){
       basePercent = 0.10;
       break;
   }
-  return basePercent - 1;
+  return basePercent;
 }
 
 function getYearAdjustment(employeeNumber){
